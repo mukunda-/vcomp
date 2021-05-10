@@ -5,4 +5,4 @@ Example registry keys to add it to mp4. Might not work because context menu regi
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\SystemFileAssociations\.mp4\Shell\VComp
 - (Default) VComp
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\SystemFileAssociations\.mp4\Shell\VComp\command
-- (Default) powershell -noexit "C:\path\to\vcomp.ps1" -InputFile %1
+- (Default) powershell -noexit "C:\path\to\vcomp.ps1" -InputFile '%1'
