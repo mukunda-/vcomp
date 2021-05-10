@@ -75,8 +75,11 @@ param(
     [string[]]$AdditionalFfmpegOptions
 )
 
-Write-Host "-------------------------------------------------------------------------------"
 
+#-----------------------------------------------------------------------------------------
+# Checks variable for a value and then fetches it if needed. Default value is provided if
+#  the user skips the option. $helpScript is an optional scriptblock to print help before
+#  the prompt.
 Function GetParam( [ref][string]$Variable, [string]$name, [string]$prompt,
                    [string]$default = "", [scriptblock]$helpScript ) {
    if( -not $Variable.Value ) {
@@ -113,6 +116,7 @@ Function PostfixFilename( [string]$path, $postfix ) {
    $path.Substring( 0, $dot ) + $postfix + $path.Substring( $dot )
 }
 
+Write-Host "-------------------------------------------------------------------------------"
 GetParam ([ref]$InputFile) "Input file" "Path to input file" "input.mp4"
 
 $outputFileDefault = PostfixFilename $InputFile "-vc"
@@ -176,7 +180,6 @@ switch( $Quality ) {
 }
 
 # TODO: Validate the quality settings.
-
 
 GetParam ([ref]$TrimStart) "Trim start" "Trim start point"
 GetParam ([ref]$TrimEnd) "Trim end" "Trim end point"
@@ -248,4 +251,6 @@ if( $TrimEnd ) {
 
 Write-Host ">> ffmpeg" "-y" @trim "-i" $InputFile @render_options @AdditionalFfmpegOptions $OutputFile -separator " "
 
+# Placing the trim parameters (-ss/-to) before the input file causes the seek to happen
+#  before decoding. It will skip to a keyframe and then decode only a small offset.
 ffmpeg -y @trim -i $InputFile @render_options @AdditionalFfmpegOptions $OutputFile
