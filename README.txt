@@ -11,4 +11,4 @@ runvcomp.bat is included because it seems to be impossible to pass %1 to powersh
 
 And by safely, I mean escaping single quotes in filenames, which are quite common in "Mukunda Johnson's" Zoom recordings.
 
-VComp requires ffmpeg accessible on the %PATH%
+VComp requires ffmpeg accessible on the %PATH%.
